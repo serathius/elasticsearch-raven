@@ -35,6 +35,7 @@ def run_handler():
                                   debug=args.debug)
 
     def terminate(signum, frame):
+        print('terminate', flush=True)
         exit(0)
     signal.signal(signal.SIGTERM, terminate)
     signal.signal(signal.SIGQUIT, terminate)

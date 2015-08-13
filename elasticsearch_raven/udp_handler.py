@@ -24,10 +24,14 @@ class Handler(object):
         try:
             try:
                 while True:
+                    print('read', flush=True)
                     data, address = self.sock.recvfrom(65535)
+                    print('after_read', flush=True)
                     with utils.ignore_signals([signal.SIGTERM, signal.SIGQUIT]):
+                        print('enter')
                         message = transport.SentryMessage.create_from_udp(data)
                         self.pending_logs.put(message)
+                        print('exit')
                     if self.debug:
                         sys.stdout.write('{host}:{port} [{date}]\n'.format(
                             host=address[0], port=address[1],
